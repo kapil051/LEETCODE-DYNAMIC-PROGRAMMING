@@ -1,0 +1,129 @@
+
+   //DP SOLUTION
+
+class Solution {
+public:
+    int maxProduct(vector<int>& nums) {
+        
+              int n=nums.size();
+        
+           int globalMax=nums[n-1];
+        
+          vector<pair<int,int>> dp(n,{0,0});
+         
+             dp[n-1]={nums[n-1],nums[n-1]};
+        
+          for(int idx=n-2;idx>=0;idx--){
+              
+                  int p1=nums[idx];
+              
+              pair<int,int> newPair=dp[idx+1];
+              
+               int p2=nums[idx]*newPair.first;
+              
+               int p3=nums[idx]*newPair.second;
+              
+               int maximum=max(p1,max(p2,p3));
+               int minimum=min(p1,min(p2,p3));
+              
+              globalMax=max(globalMax,maximum);
+              
+               dp[idx]={maximum,minimum};
+          }
+        
+         return globalMax;
+    }
+};
+
+
+       //ITRATIVE SOLUTION
+
+
+
+// class Solution {
+// public:
+//     int maxProduct(vector<int>& nums) {
+        
+//         //IN THIS QUESTION YOU NEED TO TAKE ACTION ON MAX TILL NOW AND MIN TILL NOW ND UPDATE BOTH OF THEM ACCORDINGLY
+        
+//         //STEP 1: IF MAXTILLNOW AND MINTILLNOW IS BOT ZERO UPDATE BOTH OF THEM BY CURRENT ELEMENT AND             UPDATE THE ANSWER
+        
+//         //ELSE UPADTE YOUR MAX IT WILL BE MAXIMUM OF THE CURRENT ELEMENT AND NUMS[I]*MAXTILLNOW
+//         //NUMS[I]*MINTILLNOW
+//         //UPDATE MINTILLNOW BY MINIMUM OF NUMS[I] AND NUMS[I]*MAXTILLNOW AND NUMS[I]*MINTILLNOW
+        
+        
+        
+//           int maxTillNow=0;
+//           int minTillNow=0;
+        
+//              int ans=INT_MIN;
+        
+//         for(int i=0;i<nums.size();i++){
+            
+//             if(maxTillNow==0&&minTillNow==0) {
+//                 maxTillNow=nums[i];
+//                 minTillNow=nums[i];
+                
+//                 ans=max(ans,nums[i]);
+                
+//                   continue;
+//             }
+            
+//              cout<<"max:"<<maxTillNow<<"min:"<<minTillNow<<"ans:"<<ans<<endl;
+            
+//              ans=max(ans,max(nums[i],max(nums[i]*maxTillNow,nums[i]*minTillNow)));
+            
+//             int newMaxTillNow=max(nums[i],max(nums[i]*maxTillNow,nums[i]*minTillNow));
+//             minTillNow=min(nums[i],min(nums[i]*maxTillNow,nums[i]*minTillNow));
+           
+//                maxTillNow=newMaxTillNow;
+            
+//         }
+        
+//        return ans; 
+//     }
+// };
+
+                  RECURSIVE SOLUTION
+
+// class Solution {
+// public:      
+//              int globalMax=INT_MIN;
+    
+//      pair<int,int> helper(vector<int> nums,int idx){
+         
+//          if(idx==nums.size()-1){
+              
+//               globalMax=nums[idx];
+             
+//              return {nums[idx],nums[idx]};
+//          }
+         
+//           pair<int,int> ans=helper(nums,idx+1);
+           
+//                 int p1=nums[idx];
+         
+//              int p2=nums[idx]*ans.first;
+           
+//              int p3=nums[idx]*ans.second;
+         
+//           int maximum=max(p1,max(p2,p3));
+         
+//           int minimum=min(p1,min(p2,p3));
+         
+//          globalMax=max(globalMax,maximum);
+            
+
+//          return {minimum,maximum};
+//      }
+    
+    
+//     int maxProduct(vector<int>& nums){
+  
+//          helper(nums,0); 
+        
+//          return globalMax;
+        
+//     }
+// };
