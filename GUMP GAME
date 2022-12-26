@@ -80,3 +80,39 @@ public:
         
     }
 };
+
+//***************************************************************************DP(NOT ACCEPTED)*********************************************************
+
+class Solution {
+public:
+    bool canJump(vector<int>& nums){
+        
+        vector<int> dp(nums.size(),0);
+        
+             dp[nums.size()-1]=1;
+        
+        for(int i=nums.size()-2;i>=0;i--){
+            
+               int n=nums[i];
+            
+            for(int j=1;j<=n;j++){
+                
+                 bool ans=0;
+                
+                if(i+j>nums.size()-1){
+                  ans=0;
+                } 
+                
+                   else{
+                        ans=dp[i+j]; 
+                   }
+                   
+                if(ans==1) dp[i]=1;
+                
+            }
+            
+        }
+      
+        return dp[0];
+    }
+};
