@@ -63,3 +63,40 @@ public:
 
 **********************************************************************************DP************************************************************
 
+class Solution {
+public:
+    int jump(vector<int>& nums) {
+        
+         vector<int> dp(nums.size(),0);
+        
+       for(int idx=nums.size()-2;idx>=0;idx--){
+           
+           if(nums[idx]==0){
+               dp[idx]=INT_MAX;
+               continue;
+           }
+           
+             int minSteps=INT_MAX;
+           
+           for(int i=1;i<=nums[idx];i++){
+               
+               if(idx+i>nums.size()-1){
+                   continue;
+               }
+               
+               minSteps=min(minSteps,dp[idx+i]);
+               
+           }
+           
+            if(minSteps==INT_MAX) dp[idx]=minSteps;
+           
+            else dp[idx]=minSteps+1;
+         
+       }    
+        
+        return dp[0];
+    }
+};
+
+
+
