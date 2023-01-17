@@ -1,0 +1,78 @@
+A binary string is monotone increasing if it consists of some number of 0's (possibly none), followed by some number of 1's (also possibly none).
+
+You are given a binary string s. You can flip s[i] changing it from 0 to 1 or from 1 to 0.
+
+Return the minimum number of flips to make s monotone increasing.
+
+ 
+
+Example 1:
+
+Input: s = "00110"
+Output: 1
+Explanation: We flip the last digit to get 00111.
+Example 2:
+
+Input: s = "010110"
+Output: 2
+Explanation: We flip to get 011111, or alternatively 000111.
+Example 3:
+
+Input: s = "00011000"
+Output: 2
+Explanation: We flip to get 00000000.
+ 
+
+Constraints:
+
+1 <= s.length <= 105
+s[i] is either '0' or '1'.
+
+******************************************************************************************************************************************************************
+class Solution {
+public:
+
+    int minFlipsMonoIncr(string s) {
+        
+       int count=0;
+        int flips=0;
+        
+        for(int i=0;i<s.size();i++){
+            
+            if(s[i]=='1') count++;
+            
+            if(s[i]=='0')  flips++;
+            
+            flips=min(flips,count);
+            
+        }
+      return flips;  
+    }
+    
+ *****************************************************************************************************************************************************************
+ 
+ 
+//Memoisation
+
+class Solution {
+public:
+    int solve(int idx,int prev,string &s,vector<vector<int>>& dp){
+        if(idx==s.size()){
+            return 0;
+        }
+        if(dp[idx][prev]!=-1) return dp[idx][prev];
+
+        if(prev){
+            return dp[idx][prev]=(s[idx]=='0')+solve(idx+1,prev,s,dp);
+        }
+
+        else{
+            return dp[idx][prev]=min((s[idx]=='1')+solve(idx+1,0,s,dp),(s[idx]=='0')+solve(idx+1,1,s,dp));
+        }
+
+    }
+
+    int minFlipsMonoIncr(string s) {
+        vector<vector<int>> dp(s.size(),vector<int>(2,-1));
+        return solve(0,0,s,dp);
+    }
